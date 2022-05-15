@@ -17,7 +17,7 @@ while True:
     # 读取视频流
     grabbed, img = camera.read()
     gray1 = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    gray = cv2.GaussianBlur(gray1, (21, 21), 0)#可在这添加处理程序
+    gray = cv2.GaussianBlur(gray1, (21, 21), 0 ) # 可在这添加处理程序
     #！！！等相机稳定后按下W选择背景
     if key == ord('w'):
         background = gray
