@@ -50,9 +50,9 @@ while True:
     img1=human_detection(img)
     img2=movement_detection(img)
     cv2.imshow('human_detection', img1)
-    cv2.imshow('mog', img2[1])
-    cv2.imshow('thresh', img2[2])
-    cv2.imshow('movement_detection', img2[0])
+    # cv2.imshow('mog', img2[1])
+    # cv2.imshow('thresh', img2[2])
+    # cv2.imshow('movement_detection', img2[0])
     # 退出
     if ord('q')==cv2.waitKey(10):
         exit(0)
