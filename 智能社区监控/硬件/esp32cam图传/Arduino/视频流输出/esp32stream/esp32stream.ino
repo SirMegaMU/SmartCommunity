@@ -7,8 +7,8 @@ const char* WIFI_PASS = "1TurnKill";
 
 WebServer server(80);
 
-static auto loRes = esp32cam::Resolution::find(320, 240);
-static auto hiRes = esp32cam::Resolution::find(800, 600);
+static auto loRes = esp32cam::Resolution::find(800, 600);
+static auto hiRes = esp32cam::Resolution::find(1600, 1200);
 
 void handleBmp()
 {
@@ -112,7 +112,6 @@ void setup()
     bool ok = Camera.begin(cfg);
     Serial.println(ok ? "CAMERA OK" : "CAMERA FAIL");
   }
-
   WiFi.persistent(false);
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);

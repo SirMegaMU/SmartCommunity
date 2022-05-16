@@ -49,6 +49,7 @@ while True:
     img=cv2.imdecode(imgNp,-1)
     img1=human_detection(img)
     img2=movement_detection(img)
+    cv2.namedWindow('human_detection', cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)
     cv2.imshow('human_detection', img1)
     # cv2.imshow('mog', img2[1])
     # cv2.imshow('thresh', img2[2])
