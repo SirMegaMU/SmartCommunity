@@ -5,7 +5,7 @@
 const char* ssid = "SirMegaMU"; //Enter SSID
 const char* password = "1TurnKill"; //Enter Password
 const char* websockets_server_host = "116.205.143.120"; //Enter server adress
-const uint16_t websockets_server_port = 8080; // Enter server port 我这里端口号是自动判断的
+const uint16_t websockets_server_port = 8080; // Enter server port
  
 using namespace websockets;
  
@@ -38,8 +38,9 @@ void setup() {
         delay(1000);
     }
     Serial.print("ESP Ready! Use 'http://");
-    Serial.println(WiFi.localIP());
- 
+    Serial.print(WiFi.localIP());
+    Serial.print("/'");
+    Serial.println("--------");
     
     // run callback when messages are received
     client.onMessage(onMessageCallback);
@@ -48,10 +49,10 @@ void setup() {
     client.onEvent(onEventsCallback);
  
     // Connect to server
-    client.connect(websockets_server_host);        //注意这里只给了host一个参数，没有给端口号
+    client.connect(websockets_server_host);        // no port (为什么？？？)
     // Send a message
     client.send("HELLO");
- 
+    Serial.println("send 'HELLO' ");
     // Send a ping
     client.ping();
 }
