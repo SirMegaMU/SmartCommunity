@@ -3,8 +3,8 @@
 const char* ssid = "SirMegaMU";
 const char* password =  "1TurnKill";
  
-const uint16_t port = 8090;
-const char * host = "192.168.0.199";
+const uint16_t port = 3389;
+const char * host = "116.205.143.120";
  
 void setup()
 {

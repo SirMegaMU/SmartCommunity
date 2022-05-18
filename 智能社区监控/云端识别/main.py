@@ -1,9 +1,8 @@
+from urllib.error import HTTPError
 import urllib.request
 import cv2
 import numpy as np
-
-url='http://192.168.137.205/cam-hi.jpg'
-
+import socket
 
 def movement_detection(image):
     # 初始化差分器
@@ -44,16 +43,39 @@ def human_detection(image):
 
 
 while True:
-    imgResp=urllib.request.urlopen(url)
-    imgNp=np.array(bytearray(imgResp.read()),dtype=np.uint8)
-    img=cv2.imdecode(imgNp,-1)
-    img1=human_detection(img)
-    img2=movement_detection(img)
-    cv2.namedWindow('human_detection', cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)
-    cv2.imshow('human_detection', img1)
-    # cv2.imshow('mog', img2[1])
-    # cv2.imshow('thresh', img2[2])
-    # cv2.imshow('movement_detection', img2[0])
-    # 退出
-    if ord('q')==cv2.waitKey(10):
-        exit(0)
+    urls=[]
+    # url='http://192.168.137.194/cam-hi.jpg'
+    s = socket.socket()
+
+    s.bind(('192.168.0.199',3389))
+    s.listen(0)
+
+    while True:
+        client, addr = s.accept()
+        while True:
+            content = client.recv(32)
+            if len(content) == 0:
+                break
+            else:
+                print(content)
+                urls.append(content)
+                client.close()
+                break
+        break
+    for url in urls:
+        try:
+            imgResp=urllib.request.urlopen(url)
+            imgNp=np.array(bytearray(imgResp.read()),dtype=np.uint8)
+            img=cv2.imdecode(imgNp,-1)
+            img1=human_detection(img)
+            img2=movement_detection(img)
+            cv2.namedWindow('human_detection'+url, cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)
+            cv2.imshow('human_detection'+url, img1)
+            # cv2.imshow('mog', img2[1])
+            # cv2.imshow('thresh', img2[2])
+            # cv2.imshow('movement_detection', img2[0])
+            # 退出
+            if ord('q')==cv2.waitKey(10):
+                exit(0)
+        except HTTPError:
+            urls.remove(url)
