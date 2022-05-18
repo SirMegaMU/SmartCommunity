@@ -10,8 +10,6 @@ const char * host = "116.205.143.120";
  
 WebServer server(80);
 WiFiClient client;
-
-static auto loRes = esp32cam::Resolution::find(800, 600);
 static auto hiRes = esp32cam::Resolution::find(1600, 1200);
 
 void serveJpg()
