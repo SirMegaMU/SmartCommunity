@@ -1,7 +1,7 @@
 from machine import UART 
 import time
 import struct
-u1=UART(1,115200,rx=18,tx=19)
+u1=UART(2,115200,rx=machine.Pin(16),tx=machine.Pin(17))
 class Pn532(object):
     def __init__(self,uart):
         self.u1 = uart
@@ -88,7 +88,7 @@ class Pn532(object):
             self.u1.read()
 
 if __name__=='__main__':
-    u1=UART(1,115200,rx=18,tx=19)
+    u1=UART(2,115200,rx=machine.Pin(16),tx=machine.Pin(17))
     a=Pn532(u1) #实例化，同时会执行唤醒模块操作
     read_data=a.read(5)  #读块命令，参数为块号,读取成功有返回值，返回为16位块数据，失败返回空
 #   验证和读写进行了组合，读写命令都是阻塞等待模式，方便读写卡，可以先执行命令等一会再放卡
