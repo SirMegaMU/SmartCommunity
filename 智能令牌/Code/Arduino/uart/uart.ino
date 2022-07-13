@@ -7,6 +7,7 @@ PN532_SWHSU pn532swhsu( SWSerial );
 PN532 nfc( pn532swhsu );
 String tagId = "None", dispTag = "None";
 byte nuidPICC[4];
+byte NFCDATA[32];
 uint8_t cards[32][8];  //前七位UID，后一位为长度
 uint8_t NumCards=0;   //卡数
 
@@ -71,12 +72,26 @@ void readNfcUid() {
     Serial.println("Timed out! Waiting for a card...");
   }
 }
-void readNfcData(unsigned char addr) {
+void readNfcData(uint8_t addr) {
   // for Mifare cards
   boolean success;
-  uint8_t NFcdata[32];
+  uint8_t NFCdata[32];
   uint8_t NFCdatalength;
-  success = nfc.
+  success = nfc.mifareclassic_ReadDataBlock(addr, &NFCdata[0]);
+  if(success){
+    Serial.print("Data Length:");
+    Serial.print(NFCdatalength, DEC);
+    Serial.println("bytes");
+    Serial.print("Data:");
+    for(uint8_t i=0;i<NFCdatalength;i++){
+      NFCDATA[i]=NFCdata[i];
+      Serial.print(" ");Serial.print(NFCdata[i],DEC);
+    }
+    Serial.println();
+  }
+  else{
+    Serial.println("Time out! Waiting for a card");
+  }
 }
 
 
